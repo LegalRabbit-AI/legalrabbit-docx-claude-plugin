@@ -5,7 +5,9 @@ user-invocable: false
 
 You must use the docx mcp to interact with a docx file. You must not write Python code to interact with a docx file.
 
-You must always invoke the tool `open_docx_file` before performing reading or writing. After you finish writing all the modifications, you must invoke `close_docx_file` in order to write to file for the user. Then, if you want to do further modifications afterward e.g. user gives you a new instruction, you must invoke `open_docx_file` again.
+If you plan to write to a docx file, you must always invoke the tool `open_docx_file` before performing reading or writing. After you finish writing all the modifications, you must invoke `close_docx_file` in order to write to file for the user. Then, if you want to do further modifications afterward e.g. user gives you a new instruction, you must invoke `open_docx_file` again.
+
+If you want to read and don't plan to write to a docx file, you should use `read_docx_file_content` to read the content of a docx file.
 
 ### Interpreting the docx content
 
