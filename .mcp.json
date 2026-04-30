@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "docx": {
+      "type": "stdio",
+      "command": "legalrabbit-docx-mcp",
+      "args": [],
+      "env": {}
+    }
+  }
+}
