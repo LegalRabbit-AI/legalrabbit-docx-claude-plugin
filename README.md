@@ -1,0 +1,2 @@
+LegalRabbit DOCX Claude plugin
+===============================
