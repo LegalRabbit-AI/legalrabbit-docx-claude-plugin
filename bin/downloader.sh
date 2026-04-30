@@ -6,14 +6,21 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Read version from plugin.json
 VERSION=$(grep -o '"version"[[:space:]]*:[[:space:]]*"[^"]*"' "${SCRIPT_DIR}/../.claude-plugin/plugin.json" | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
 
-FILEPATH="${SCRIPT_DIR}/legalrabbit-docx-mcp-${VERSION}"
+# Detect if running on Windows
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$OSTYPE" == "cygwin" ]]; then
+    EXE_EXT=".exe"
+else
+    EXE_EXT=""
+fi
+
+FILEPATH="${SCRIPT_DIR}/legalrabbit-docx-mcp-${VERSION}${EXE_EXT}"
 
 # Delete other versions
-find "${SCRIPT_DIR}" -maxdepth 1 -name "legalrabbit-docx-mcp-*" ! -name "legalrabbit-docx-mcp-${VERSION}" -type f -delete 2>/dev/null
+find "${SCRIPT_DIR}" -maxdepth 1 -name "legalrabbit-docx-mcp-*" ! -name "legalrabbit-docx-mcp-${VERSION}${EXE_EXT}" -type f -delete 2>/dev/null
 
 if [ ! -f "${FILEPATH}" ]; then
     # Download the file to the script's directory
-    curl -s -L -o "${FILEPATH}" https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx-mcp
+    curl -s -L -o "${FILEPATH}" https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx-mcp${EXE_EXT}
 
     # Make the downloaded file executable
     chmod +x "${FILEPATH}"
