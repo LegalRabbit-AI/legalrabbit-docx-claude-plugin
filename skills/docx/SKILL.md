@@ -20,6 +20,8 @@ Each paragraph is a <p> with its ID. Each paragraph may have directly or indirec
 3. <del> indicates an insertion tracked change. The <del> will contain an ID and author. It must not contain text directly. It must contain <span> or <p> or both.
 4. <bullet> with its `id` and `level` attribute. <bullet> indicates that the paragraph starts with a bullet point. The label of the bullet point is the content of the element <bullet>. <bullet> must not contain any other element.
 
+<table> represents a table. <tr> represents a row, and <td> represents a cell within a row.
+
 ### Interpreting the docx comment
 
 Each comment contains the `context` field, which contains a paragraph or paragraphs on which the comment was made. You can identify the relevant part of the doc by using the `id` attributes of the paragraphs in the `context` field. Within the context, the start of the comment range is marked by <commentRangeStart /> and the end of the comment range is marked by <commentRangeEnd />.
