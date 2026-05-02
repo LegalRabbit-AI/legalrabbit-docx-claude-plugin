@@ -4,17 +4,5 @@
   "version": "0.1.0",
   "author": {
     "name": "legalrabbit.ai"
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/bin/downloader.sh"
-          }
-        ]
-      }
-    ]
   }
 }

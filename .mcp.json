@@ -2,7 +2,7 @@
   "mcpServers": {
     "docx": {
       "type": "stdio",
-      "command": "${CLAUDE_PLUGIN_ROOT}/bin/legalrabbit-docx-mcp-0.1.0",
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/downloader.sh",
       "args": [],
       "env": {}
     }
