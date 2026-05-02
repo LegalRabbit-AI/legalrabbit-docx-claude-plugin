@@ -4,7 +4,9 @@
       "type": "stdio",
       "command": "${CLAUDE_PLUGIN_ROOT}/bin/downloader.sh",
       "args": [],
-      "env": {}
+      "env": {
+        "APP_VERSION": "0.1.0"
+      }
     }
   }
 }
