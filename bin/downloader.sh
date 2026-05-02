@@ -22,6 +22,7 @@ if [ ! -f "${FILEPATH}" ]; then
     # Download the file to the script's directory
     DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx-mcp${EXE_EXT}"
     if ! curl -s -L -o "${FILEPATH}" "${DOWNLOAD_URL}"; then
+        rm -f "${FILEPATH}"
         echo "Error: Failed to download the LegalRabbit executable from ${DOWNLOAD_URL}" >&2
         exit 1
     fi
