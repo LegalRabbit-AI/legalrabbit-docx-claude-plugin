@@ -30,5 +30,5 @@ else
     echo "File already exists, skipping download: ${FILEPATH}" >&2
 fi
 
-# Execute the binary
-exec "${FILEPATH}"
+# Execute the binary and pass the stdin from bash to the binary
+exec "${FILEPATH}" <&0
