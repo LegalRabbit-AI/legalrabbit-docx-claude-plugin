@@ -20,7 +20,11 @@ find "${SCRIPT_DIR}" -maxdepth 1 -name "legalrabbit-docx-mcp-*" ! -name "legalra
 
 if [ ! -f "${FILEPATH}" ]; then
     # Download the file to the script's directory
-    curl -s -L -o "${FILEPATH}" https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx-mcp${EXE_EXT}
+    DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx-mcp${EXE_EXT}"
+    if ! curl -s -L -o "${FILEPATH}" "${DOWNLOAD_URL}"; then
+        echo "Error: Failed to download the LegalRabbit executable from ${DOWNLOAD_URL}" >&2
+        exit 1
+    fi
 
     # Make the downloaded file executable
     chmod +x "${FILEPATH}"
