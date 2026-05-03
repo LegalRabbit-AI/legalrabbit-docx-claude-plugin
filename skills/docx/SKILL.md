@@ -9,7 +9,7 @@ If you plan to write to a docx file, you must always invoke the tool `open_docx_
 
 If you want to read and don't plan to write to a docx file, you should use `read_docx_file_content` to read the content of a docx file.
 
-### Interpreting the docx content
+# Interpreting the docx content
 
 The content of a docx file in a simplified XML format. The content consists of one or more paragraphs.
 
@@ -22,7 +22,7 @@ Each paragraph is a <p> with its ID. Each paragraph may have directly or indirec
 
 <table> represents a table. <tr> represents a row, and <td> represents a cell within a row.
 
-### Interpreting the docx comment
+# Interpreting the docx comment
 
 Each comment contains the `context` field, which contains a paragraph or paragraphs on which the comment was made. You can identify the relevant part of the doc by using the `id` attributes of the paragraphs in the `context` field. Within the context, the start of the comment range is marked by <commentRangeStart /> and the end of the comment range is marked by <commentRangeEnd />.
 
@@ -33,7 +33,7 @@ Here are some additional rules from the structure of <p> described earlier:
 2. <del> can contain <commentRangeStart />, and <commentRangeEnd />
 3. <commentRangeStart /> and <commentRangeEnd /> indicates the start and end of the comment range. It cannot range over text directly. It can range over <p>, <span>, <ins>, and <del>
 
-### Modify the docx file
+# Modify the docx file
 
 Here are the modification operations: `add_comment`, `add_reply`, `resolve_comment`, `delete_comment`, `delete_reply`, `rewrite_paragraph` , `insert_paragraph`, and `delete_paragraph`.
 
@@ -107,10 +107,20 @@ For deleting a paragraph, you will need to specify the following parameters:
 1. `deletedParagraphId`: the paragraph ID to be deleted
 
 
-## Interacting with a .pdf file
+# Reading a PDF file
 
 Use the `docx` MCP to read the PDF file.
 
 The `read_pdf` endpoint will read the PDF in the plain text format.
 
 You must not write code to read PDF.
+
+# Creating a docx file
+
+You must invoke `open_docx_file` with the wanted filepath and set `isNew` to `true` in order to create a new docx file.
+
+You may use `insert_paragraph` to insert a paragraph. If you want to insert multiple paragraphs, you can use `insert_paragraph` multiple times.
+
+You don't need to use the tracked changes e.g. `<ins>` and `<del>`. Inserting paragraph returns the paragraph ID, which you can use to add comments if you wish to do so.
+
+After finishing making the content, you must invoke `close_docx_file` to write the docx file to disk.
