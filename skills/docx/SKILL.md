@@ -35,7 +35,7 @@ Here are some additional rules from the structure of <p> described earlier:
 
 # Modify the docx file
 
-Here are the modification operations: `add_comment`, `add_reply`, `resolve_comment`, `delete_comment`, `delete_reply`, `rewrite_paragraph` , `insert_paragraph`, and `delete_paragraph`.
+Here are the modification operations: `add_comment`, `add_reply`, `resolve_comment`, `delete_comment`, `delete_reply`, `rewrite_paragraph` , `insert_paragraph`, `delete_paragraph`, `create_new_bullet_point`.
 
 When you provide an XML, they must be a valid XML.
 
@@ -101,11 +101,22 @@ You can only insert one paragraph at a time.
 
 Pay attention to HTML entities. For many symbols, we have to use their HTML entities e.g. `&#x201F;`. Do not convert HTML entities to other forms e.g. `\uXXXX`.
 
+`insert_paragraph` returns the paragraph ID of the inserted paragraph that you can use in other operations like adding a comment.
+
 ### Delete paragraph
 
 For deleting a paragraph, you will need to specify the following parameters:
 1. `deletedParagraphId`: the paragraph ID to be deleted
 
+### Create a new bullet point and new level
+
+You can use `create_bullet_point` to create a new bullet point set. 
+
+If you want to add one more level to the current bullet point, then you must provide the bullet point ID.
+
+If you want to add a new bullet point set with its first level, then you must set the bullet point ID to `null`.
+
+The operation returns the bullet point ID and the level. Then, you can use those values to specify the bullet point in a paragraph with the `<bullet id="BULLET_POINT_ID", level="LEVEL">` element.
 
 # Reading a PDF file
 
