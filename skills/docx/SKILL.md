@@ -9,6 +9,11 @@ If you plan to write to a docx file, you must always invoke the tool `open_docx_
 
 If you want to read and don't plan to write to a docx file, you should use `read_docx_file_content` to read the content of a docx file.
 
+# General style guide
+
+1. We prefer using bullet points for numbered paragraphs to using numbers for numbered paragraphs.
+2. We prefer the comment to range over some text, not an empty text.
+
 # Interpreting the docx content
 
 The content of a docx file in a simplified XML format. The content consists of one or more paragraphs.
