@@ -13,6 +13,8 @@ If you want to read and don't plan to write to a docx file, you should use `read
 
 1. We prefer using bullet points for numbered paragraphs to using numbers for numbered paragraphs.
 2. We prefer the comment to range over some text, not an empty text.
+3. You must pay attention to the `class` attributes of `<p>` and `<span>`. The `class` attribute specifies styles using a subset of TailwindCSS. When you add a new paragraph or rewrite a paragraph, you must think about what styles you want to apply to the paragraph. You should base this on the paragraphs around it.
+4. The supported Tailwind CSS classes are: `break-after-avoid-page`, `pb-[<number>px]`, `pt-[<number>px]`, `font-[<font face>]`, `font-bold`, `text-[#<hex color>]`, and `text-[<font size>px]`. Other CSS classes are not supported.
 
 # Interpreting the docx content
 
