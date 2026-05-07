@@ -145,6 +145,8 @@ You must not write code to read PDF.
 
 You must invoke `open_docx_file` with the wanted filepath and set `isNew` to `true` in order to create a new docx file.
 
+Sometimes the user might want to create a new docx file based on an existing docx file, then you can invoke `open_docx_file` with the wanted filepath, set `isNew` to `true`, and set `templateDocxFilePath` to the existing docx file.
+
 You may use `insert_paragraph` to insert a paragraph. If you want to insert multiple paragraphs, you can use `insert_paragraph` multiple times.
 
 You don't need to use the tracked changes e.g. `<ins>` and `<del>`. Inserting paragraph returns the paragraph ID, which you can use to add comments if you wish to do so.
