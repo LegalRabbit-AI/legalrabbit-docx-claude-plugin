@@ -1,8 +1,18 @@
 LegalRabbit DOCX Claude plugin
 ===============================
 
-A Claude Cowork plugin that enables your Cowork to create and modify DOCX files. The plugin works offline, ensuring data privacy and security of your DOCX files.
+A Claude Cowork plugin that creates and modifies DOCX files locally. It saves tons of time by enabling your Cowork to work on the docx files directly.
 
+We are using this plugin at [LegalRabbit](https://legalrabbit.ai) to speed up our legal services. Now we want to share it with the world.
+
+The plugin works offline, ensuring data privacy and security of your DOCX files.
+
+Capabilities:
+- Read the content and the comments.
+- Create a new docx file. Optionally, you can use an existing docx file as the template. The styles will be copied from the template.
+- Add tracked changes to an existing docx file.
+- Add comments and reply to comments.
+ 
 
 How to install
 ---------------
