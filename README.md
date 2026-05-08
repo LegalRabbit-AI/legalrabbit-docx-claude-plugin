@@ -28,7 +28,9 @@ How to install
 Now you can test it by telling Cowork to create a docx file. You can use this prompt: `Create an example docx file using the docx mcp.`
 
 
-About
-------
+Support
+---------
+
+Contact: tanin(at)legalrabbit.ai
 
 Learn more about us: [LegalRabbit](https://legalrabbit.ai/)
