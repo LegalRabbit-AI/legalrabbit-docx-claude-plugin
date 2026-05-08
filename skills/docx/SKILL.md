@@ -106,11 +106,11 @@ Pay attention to HTML entities. For many symbols, we have to use their HTML enti
 
 ### Insert paragraph
 
-For adding a paragraph, you will need to specify the following parameters:
-1. `newParagraph`: the new paragraph. You must not add <ins> in a new paragraph. You must not set the id of the new paragraph. If the paragraph starts with a bullet point, you must choose the appropriate bullet point ID and level for the element <bullet>. The content of <bullet> doesn't matter and will be automatically generated based on its `id` and `level` attribute.
+For inserting a paragraph, you will need to specify the following parameters:
+1. `newParagraph` (required): the new paragraph. You must not add <ins> in a new paragraph. You must not set the id of the new paragraph. If the paragraph starts with a bullet point, you must choose the appropriate bullet point ID and level for the element <bullet>. The content of <bullet> doesn't matter and will be automatically generated based on its `id` and `level` attribute.
 2. `insertBeforeParagraphId`: the insertion position before the existing paragraph ID. If it is set to an empty string, then the new paragraph will be inserted as the last paragraph.
 
-When adding a paragraph, you must consider whether the new paragraph is a continuation of the previous paragraph. If the previous paragraph has <bullet> and the new paragraph is the continuation of the previous paragraph, you must consider using <bullet> with the same ID and level.
+When inserting a paragraph, you must consider whether the new paragraph is a continuation of the previous paragraph. If the previous paragraph has <bullet> and the new paragraph is the continuation of the previous paragraph, you must consider using <bullet> with the same ID and level.
 
 You can only insert one paragraph at a time.
 
@@ -147,7 +147,8 @@ You must invoke `open_docx_file` with the wanted filepath and set `isNew` to `tr
 
 Sometimes the user might want to create a new docx file based on an existing docx file, then you can invoke `open_docx_file` with the wanted filepath, set `isNew` to `true`, and set `templateDocxFilePath` to the existing docx file.
 
-You may use `insert_paragraph` to insert a paragraph. If you want to insert multiple paragraphs, you can use `insert_paragraph` multiple times.
+You may use `insert_paragraph`, specify the `newParagraph` (required) and `insertBeforeParagraphId` (optional) parameter to insert a paragraph. 
+If you want to insert multiple paragraphs, you can use `insert_paragraph` multiple times.
 
 You don't need to use the tracked changes e.g. `<ins>` and `<del>`. Inserting paragraph returns the paragraph ID, which you can use to add comments if you wish to do so.
 
