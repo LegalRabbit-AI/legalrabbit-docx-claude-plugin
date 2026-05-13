@@ -81,6 +81,10 @@ For adding a comment, you must pick a paragraph that you want to comment over an
 1. `rewrittenParagraph`: the rewritten paragraph with its ID. One <newCommentRangeStart /> and one <newCommentRangeEnd /> must be inserted. Between <newCommentRangeStart /> and <newCommentRangeEnd />, only <span>s and their child nodes are allowed. You must not add new <ins> or <del> while adding a comment. You must not modify, insert, or delete the text content of the paragraph.
 2. `commentText`: the comment itself.
 
+Sometimes you may have already rewritten the paragraph and later want to add a comment over the rewritten paragraph without closing and re-opening the file. If that happens, you have to add the comment based on the new rewritten paragraph. Using the previous version of the paragraph would result in an error because of the content mismatch.
+
+If you need the updated paragraph, you can use `get_paragraph` to get the updated paragraph.
+
 If you want the comment to range over a part of <span>, then you must split the <span> into multiple <span>s.
 
 Try to preserve the styles of the paragraph and the spans involved.
@@ -159,6 +163,10 @@ If you want to add one more level to the current bullet point, then you must pro
 If you want to add a new bullet point set with its first level, then you must set the bullet point ID to `null`.
 
 The operation returns the bullet point ID and the level. Then, you can use those values to specify the bullet point in a paragraph with the `<bullet id="BULLET_POINT_ID" level="LEVEL">` element.
+
+### Get a paragraph
+
+Getting a paragraph by ID is useful when you want to add a comment over a paragraph that has already been rewritten.
 
 # Reading a PDF file
 
