@@ -8,6 +8,8 @@ user-invocable: false
 
 The legalrabbit-docx skill describes how to operate the legalrabbit-docx MCP that creates, edits, redlines, comments, and reads docx files. The legalrabbit-docx MCP maps a docx file to a simplified markup language that looks like HTML. Triggers include: any mention of 'Word doc', 'word document', and '.docx'.
 
+You must refer to the section "MCP Tool Reference" on how to use the legalrabbit-docx MCP.
+
 ## Contents
 
 - Read-only access
@@ -132,10 +134,12 @@ You can get all comments in a docx file using the `get_comments` tool. The respo
 ### `add_comment`
 
 For adding a comment, you must pick a paragraph that you want to comment over and insert `<newCommentRangeStart />` and `<newCommentRangeEnd />` to indicate which part is being commented over. You will need to specify the following parameters:
-1. `rewrittenParagraph`: the rewritten paragraph with its `id` attribute to indicate which paragraph. One `<newCommentRangeStart />` and one `<newCommentRangeEnd />` must be inserted. Between `<newCommentRangeStart />` and `<newCommentRangeEnd />`, only `<span>`s are allowed. You must not add a new `<ins>` or `<del>` while adding a comment. You must not modify, insert, or delete the text content of the paragraph.
+1. `rewrittenParagraph`: the rewritten paragraph with its `id` attribute to indicate which paragraph. One `<newCommentRangeStart />` and one `<newCommentRangeEnd />` must be inserted. Between `<newCommentRangeStart />` and `<newCommentRangeEnd />`, only `<span>`s are allowed. 
 2. `commentText`: the comment itself.
 
-Sometimes you may have already rewritten the paragraph and later want to add a comment over the rewritten paragraph without closing and re-opening the file. If that happens, you have to add the comment based on the new rewritten paragraph. Using the previous version of the paragraph would result in an error because of the content mismatch.
+You must not add a new `<ins>` or `<del>` while adding a comment. You must not modify, insert, or delete the text content of the paragraph.
+
+Sometimes you may have previously rewritten the paragraph and later want to add a comment over the rewritten paragraph without closing and re-opening the file. If that happens, you have to add the comment based on the new rewritten paragraph. Using the previous version of the paragraph would result in an error because of the content mismatch.
 
 If you need the updated paragraph, you can use the `get_paragraph` tool to get the updated paragraph.
 
