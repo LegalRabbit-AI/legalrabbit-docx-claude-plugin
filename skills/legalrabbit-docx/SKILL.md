@@ -15,7 +15,7 @@ The legalrabbit-docx skill describes how to operate the legalrabbit-docx MCP tha
 - Create a new docx file
 - Understand the simplified markup language
 - Understand comments
-- MCP tool reference
+- MCP Tool Reference
 
 ## Read-only access
 
@@ -39,7 +39,7 @@ After finishing with your manipulation, you must use the `close_docx_file` tool 
 
 To create a new docx file, you can use the `open_docx_file` tool with the `isNew` parameter set to `true` and optionally specify the `templateDocxFilePath` parameter to use an existing docx file as a template. If you don't specify the template, then a default template will be used.
 
-The new docx will be seeded with the content and styles from the template. Therefore, you must first use the `get_content` tool to read the content of the template and understand its style.
+The new docx will be seeded with the styles from the template. Therefore, you must first use the `get_template_content` tool to understand its styles, so you can use appropriate styles when you insert new paragraphs.
 
 Then, you can use the tools like `delete_paragraph`, `rewrite_paragraph`, and `insert_paragraph`, and to delete existing paragraphs, rewrite paragraphs, and insert new paragraphs.  You must pay attention to the styles of the paragraphs, spans, and bullet points. You must ensure the styles match the template's styles.
 
@@ -101,7 +101,33 @@ A comment may have one or more replies. Here's the comment structure:
 
 You can delete a comment or a reply by using the `delete_comment` or `delete_reply` tool. You can resolve a comment by using the `resolve_comment` tool.
 
-## MCP tool reference
+## MCP Tool Reference
+
+### `read_docx_file_content`
+
+You can get the content of a docx file using the `read_docx_file_content` tool. It supports pagination where you can specify the `characterCountLimit` param to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph.
+
+The response contains `content`, `lastParagraphId` (for using in the next subsequent `get_content` calls), and `has_more` (indicating whether there is more content to be fetched).
+
+This is a read-only tool. You don't need to invoke `open_docx_file` before using it.
+
+### `get_content`
+
+You can get the content of a docx file using the `get_content` tool. It supports pagination where you can specify the `characterCountLimit` param to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph.
+
+The response contains `content`, `lastParagraphId` (for using in the next subsequent `get_content` calls), and `has_more` (indicating whether there is more content to be fetched).
+
+You must invoke `open_docx_file` before using `get_content`.
+
+### `get_template_content`
+
+When you create a new docx file, you can use the `get_template_content` tool to fetch the content of the template. You should read the template to understand how to style paragraphs, bullets, and spans.
+
+You must invoke `open_docx_file` with `isNew` being `true` before using `get_template_content`.
+
+### `get_comments`
+
+You can get all comments in a docx file using the `get_comments` tool. The response is a list of comments. To understand a comment, please see the section "Understand comments".
 
 ### `add_comment`
 
@@ -158,7 +184,7 @@ Try to preserve the styles of the paragraph and the spans involved.
 ### `insert_paragraph`
 
 For inserting a paragraph, you will need to specify the following parameters:
-1. `newParagraph`: the new paragraph. It must contain only one `<p>` at the top level without the `id` attribute. If the paragraph starts with a bullet point, you must choose the appropriate bullet point ID and level for the element `<bullet>`. The content of `<bullet>` doesn't matter and will be automatically generated based on its `id` and `level` attribute.
+1. `newParagraph` (required): the new paragraph. It must contain exactly one `<p>` at the top level without the `id` attribute. If the paragraph starts with a bullet point, you must choose the appropriate bullet point ID and level for the element `<bullet>`. The content of `<bullet>` doesn't matter and will be automatically generated based on its `id` and `level` attribute.
 2. `insertBeforeParagraphId`: the insertion position before the existing paragraph ID. If it is set to an empty string, then the new paragraph will be inserted as the last paragraph.
 
 You must not add `<ins>` in a new paragraph. You must not set the id of the new paragraph.
@@ -172,6 +198,8 @@ Pay attention to HTML entities. For many symbols, we have to use their HTML enti
 Try to match the styles of the paragraph and the spans involved; we prefer them to match the styles of the nearby paragraphs. You must decide the appropriate styles of `<bullet>` by setting its `class` attribute if there is a bullet point.
 
 `insert_paragraph` returns the paragraph ID of the inserted paragraph that you can use in other operations like adding a comment.
+
+If you want to insert an empty paragraph, you must set the `newParagraph` parameter to `<p></p>`.
 
 ### `delete_paragraph`
 
