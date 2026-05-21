@@ -17,6 +17,7 @@ Before using any tool in the legalrabbit-docx MCP, you must call the `i_have_loa
 - Understands the simplified markup language
 - Understands comments
 - Reads docx content in the read-only mode
+- Reviews a docx file
 - Manipulates an existing docx file
 - Creates a new docx file
 - MCP Tool References
@@ -81,6 +82,12 @@ Sometimes you may want to read the content of a docx file without modifying it. 
 
 You must refer to the section "MCP Tool References" on how to use the legalrabbit-docx MCP.
 
+## Reviews a docx file
+
+Sometimes you may want to review the content of a docx file, you should call the `get_plain_text_content` tool because the returned content would be in plain-text without styles and formatting.
+
+Once you've reviewed the content and know what modifications you would like to do, you can use the `get_paragraph` tool to get a specific paragraph in the simplified markup language. Then, you can use `rewrite_paragraph`, `add_comment`, and other tools to modify the paragraph.
+
 ## Manipulates a docx file
 
 When you want to manipulate an existing docx file (e.g. editing, redlining, adding a comment), you must first use the `open_docx_file` tool to open the docx file.
@@ -130,11 +137,26 @@ The `password` must be `Cogito, ergo sum`.
 Tool: `read_docx_file_content`
 Params: `filePath` (required), `characterCountLimit`, and `startingAfterParagraphId`
 
-You can get the content of a docx file using the `read_docx_file_content` tool. It supports pagination where you can specify the `characterCountLimit` param to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph.
+You can get the content of a docx file using the `read_docx_file_content` tool. It supports pagination where you can specify the `characterCountLimit` param (max: 20000) to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph. You should set the `characterCountLimit` to `20000`.
+
+The response contains `content`, `lastParagraphId` (for using in the next subsequent `read_docx_file_content` calls), and `hasMore` (indicating whether there is more content to be fetched).
+
+This is a read-only tool. You don't need to invoke `open_docx_file` before using it.
+
+### Gets plain-text content
+
+Tool: `get_plain_text_content`
+Params: `characterCountLimit` and `startingAfterParagraphId`
+
+You can get the plain-text content of a docx file using the `get_plain_text_content` tool. It supports pagination where you can specify the `characterCountLimit` param (max: 20000) to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph. You should set the `characterCountLimit` to `20000`.
 
 The response contains `content`, `lastParagraphId` (for using in the next subsequent `get_content` calls), and `has_more` (indicating whether there is more content to be fetched).
 
-This is a read-only tool. You don't need to invoke `open_docx_file` before using it.
+`get_plain_text_content` is excellent when you want to review the content of the docx file without formatting.
+
+Each paragraph is prepended with the paragraph ID that looks like `[id: PARAGRAPH_ID]`. You can use the `get_paragraph` tool to get the specific paragraph with its style before performing modifications.
+
+You must invoke `open_docx_file` before using `get_content`.
 
 ### Gets content
 
@@ -144,6 +166,8 @@ Params: `characterCountLimit` and `startingAfterParagraphId`
 You can get the content of a docx file using the `get_content` tool. It supports pagination where you can specify the `characterCountLimit` param (max: 20000) to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph. You should set the `characterCountLimit` to `20000`.
 
 The response contains `content`, `lastParagraphId` (for using in the next subsequent `get_content` calls), and `has_more` (indicating whether there is more content to be fetched).
+
+`get_content` returns the content in the simplified markup language that includes styles.
 
 You must invoke `open_docx_file` before using `get_content`.
 
