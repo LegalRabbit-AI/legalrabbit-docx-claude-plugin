@@ -10,7 +10,9 @@ The legalrabbit-docx skill describes how to operate the legalrabbit-docx MCP tha
 
 First, you must familiarize yourself with the "Understand the simplified markup language" and "Understand comments" sections. You must refer to the section "MCP Tool References" on how to use the legalrabbit-docx MCP.
 
-Before using any tool in the legalrabbit-docx MCP, you must call the `i_have_loaded_the_legalrabbit_docx_skill` tool with a designated password (See: "MCP Tool References") in order to confirm that you have loaded the legalrabbit-docx skill.
+Before using any tool in the legalrabbit-docx MCP, you must call the `i_have_loaded_the_legalrabbit_docx_skill` tool with a designated password in order to confirm that you have loaded the legalrabbit-docx skill.
+
+The MCP tools mentioned here are from the legalrabbit-docx MCP. You must refer to `./MCP_TOOL_REFERENCES.md` on how to use the MCP tools.
 
 ## Contents
 
@@ -20,7 +22,7 @@ Before using any tool in the legalrabbit-docx MCP, you must call the `i_have_loa
 - Reviews a docx file
 - Manipulates an existing docx file
 - Creates a new docx file
-- MCP Tool References
+- Handles an MCP tool error
 
 ## Understands the simplified markup language
 
@@ -80,8 +82,6 @@ You can delete a comment or a reply by using the `delete_comment` or `delete_rep
 
 Sometimes you may want to read the content of a docx file without modifying it. You can use the `read_docx_file_content` tool to do so without going through the flow of opening, getting content, and closing a docx file.
 
-You must refer to the section "MCP Tool References" on how to use the legalrabbit-docx MCP.
-
 ## Reviews a docx file
 
 Sometimes you may want to review the content of a docx file, you should call the `get_plain_text_content` tool because the returned content would be in plain-text without styles and formatting.
@@ -92,7 +92,7 @@ Once you've reviewed the content and know what modifications you would like to d
 
 When you want to manipulate an existing docx file (e.g. editing, redlining, adding a comment), you must first use the `open_docx_file` tool to open the docx file.
 
-Then, you can use the tools like `get_content` and `get_comments` to read the content and comments of the docx file. Then, you can use the tools like `add_comment`, `rewrite_paragraph`, `insert_paragraph`, and many more to modify the docx file. See the section "MCP tool references" for all available tools.
+Then, you can use the tools like `get_content` and `get_comments` to read the content and comments of the docx file. Then, you can use the tools like `add_comment`, `rewrite_paragraph`, `insert_paragraph`, and many more to modify the docx file.
 
 When manipulating the docx file, you are forbidden to change the content of the docx file. You can only add comments/replies, resolve comments, delete comments/replies, redline, or perform other read-only operations. 
 
@@ -101,8 +101,6 @@ Redlining means to add content using the `<ins>` tag or delete content using the
 If you accidentally perform a direct content change, the legalrabbit-docx MCP will raise an appropriate exception.
 
 After finishing with your manipulation, you must use the `close_docx_file` tool to write the changes to disk and close the docx file.
-
-You must refer to the section "MCP Tool References" on how to use the tools in the legalrabbit-docx MCP.
 
 ## Creates a new docx file
 
@@ -116,205 +114,17 @@ When creating the docx file, you are allowed to change the content of the docx f
 
 After finishing with your operations, you must use the `close_docx_file` tool to write the changes to disk and close the docx file.
 
-You must refer to the section "MCP Tool References" on how to use the tools in the legalrabbit-docx MCP.
+### Handles an MCP tool error
 
-## MCP Tool References
+You must understand the error message before retrying. 
 
-### Confirms you have loaded the legalrabbit-docx skill
+Here are some common errors:
+- Missing input parameters. Then, you must specify the input parameters. 
+- Invalid markup. Sometimes a certain tag isn't allowed inside another tag. Sometimes a certain tag is a self-closing tag.
+- Forbidden direct content change. Sometimes direct content change isn't allowed. You may need to use `<ins>` or `<del>` instead.
 
-Tool: `i_have_loaded_the_legalrabbit_docx_skill`
-Params: `password` (required)
+You must re-read the reference for the MCP tool again to ensure you specify the parameters correctly.
 
-You must call the `i_have_loaded_the_legalrabbit_docx_skill` tool before using any other tool in the legalrabbit-docx MCP. You only need to call it once per session.
+When retrying, you should not specify the same parameters with the same values. You should try a new set of params and values. 
 
-This is to ensure that you've loaded the legalrabbit-docx skill. In the past, sometimes you forgot to load the legalrabbit-docx skill.
-
-The `password` must be `Cogito, ergo sum`.
-
-
-### Reads the content in the read-only mode
-
-Tool: `read_docx_file_content`
-Params: `filePath` (required), `characterCountLimit`, and `startingAfterParagraphId`
-
-You can get the content of a docx file using the `read_docx_file_content` tool. It supports pagination where you can specify the `characterCountLimit` param (max: 20000) to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph. You should set the `characterCountLimit` to `20000`.
-
-The response contains `content`, `lastParagraphId` (for using in the next subsequent `read_docx_file_content` calls), and `hasMore` (indicating whether there is more content to be fetched).
-
-This is a read-only tool. You don't need to invoke `open_docx_file` before using it.
-
-### Gets plain-text content
-
-Tool: `get_plain_text_content`
-Params: `characterCountLimit` and `startingAfterParagraphId`
-
-You can get the plain-text content of a docx file using the `get_plain_text_content` tool. It supports pagination where you can specify the `characterCountLimit` param (max: 20000) to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph. You should set the `characterCountLimit` to `20000`.
-
-The response contains `content`, `lastParagraphId` (for using in the next subsequent `get_content` calls), and `has_more` (indicating whether there is more content to be fetched).
-
-`get_plain_text_content` is excellent when you want to review the content of the docx file without formatting.
-
-Each paragraph is prepended with the paragraph ID that looks like `[id: PARAGRAPH_ID]`. You can use the `get_paragraph` tool to get the specific paragraph with its style before performing modifications.
-
-You must invoke `open_docx_file` before using `get_content`.
-
-### Gets content
-
-Tool: `get_content`
-Params: `characterCountLimit` and `startingAfterParagraphId`
-
-You can get the content of a docx file using the `get_content` tool. It supports pagination where you can specify the `characterCountLimit` param (max: 20000) to limit the number of characters returned and the `startingAfterParagraphId` param to start after a specific paragraph. You should set the `characterCountLimit` to `20000`.
-
-The response contains `content`, `lastParagraphId` (for using in the next subsequent `get_content` calls), and `has_more` (indicating whether there is more content to be fetched).
-
-`get_content` returns the content in the simplified markup language that includes styles.
-
-You must invoke `open_docx_file` before using `get_content`.
-
-### Gets the template's content
-
-Tool: `get_template_content`
-Params: none
-
-When you create a new docx file, you can use the `get_template_content` tool to fetch the content of the template. You should read the template to understand how to style paragraphs, bullets, and spans.
-
-You must invoke `open_docx_file` with `isNew` being `true` before using `get_template_content`.
-
-### Gets all comments
-
-Tool: `get_comments`
-Params: none
-
-You can get all comments in a docx file using the `get_comments` tool. The response is a list of comments. To understand a comment, please see the section "Understand comments".
-
-### Adds a comment
-
-Tool: `add_comment`
-Params: `rewrittenParagraph` (required) and `commentText` (required)
-
-For adding a comment, you must pick a paragraph that you want to comment over and insert `<newCommentRangeStart />` and `<newCommentRangeEnd />` to indicate which part is being commented over. You will need to specify the following parameters:
-1. `rewrittenParagraph`: the rewritten paragraph with its `id` attribute to indicate which paragraph. One `<newCommentRangeStart />` and one `<newCommentRangeEnd />` must be inserted. Between `<newCommentRangeStart />` and `<newCommentRangeEnd />`, only `<span>`s are allowed. 
-2. `commentText`: the comment itself.
-
-If applicable, you should rewrite the paragraph, add  `<ins>`, add `<del>`, and add a comment at the same time.
-
-You should only call the `get_paragraph` tool to get the updated paragraph if you've previously modified the paragraph; otherwise, you should not invoke `get_paragraph`.
-
-If you want the comment to range over a part of `<span>`, then you must split the `<span>` into multiple `<span>`s.
-
-You must pay attention to the styles and try to preserve the styles of the paragraph and the spans involved.
-
-`<newCommentRangeStart />` and `<newCommentRangeEnd />` are self-closing tags aka void elements.
-
-### Adds reply
-
-Tool: `add_reply`
-Params: `replyText` (required) and `parentCommentId` (required)
-
-For adding a reply to a comment, you must provide the parent comment ID and the text of the reply.
-
-### Resolves comment
-
-Tool: `resolve_comment`
-Params: `commentId` (required)
-
-For resolving a comment, you must provide a comment ID to be resolved. Resolving a comment isn't applicable to a reply.
-
-### Deletes comment
-
-Tool: `delete_comment`
-Params: `commentId` (required)
-
-For deleting a comment, you must provide either a comment ID. If you delete a comment, all of its replies will also be deleted.
-
-### Deletes reply
-
-Tool: `delete_reply`
-Params: `replyId` (required)
-
-For deleting a reply, you must provide a reply ID.
-
-### Rewrites a paragraph
-
-Tool: `rewrite_paragraph`
-Params: `rewrittenParagraph` (required)
-
-You rewrite a paragraph to change the content or add/edit `<ins>` and `<del>` or both.
-
-You must pick a paragraph that you want to rewrite. You must preserve the `id` attribute to indicate which paragraph you want to rewrite.
-
-When you add a new `<ins>` or `<del>`, you must not set the `id` and `author` attribute. `<ins>` and `<del>` must contain `<span>`s. If `<ins>` or `<del>` should cover a part of a `<span>`, then you must split the `<span>`.
-
-The existing `<ins>` and `<del>` will have the `author` attributes. If `author` is `LegalRabbit`, then you should modify its content directly as opposed to adding a new `<ins>` or `<del>`.
-
-Note that whitespaces and tabs within a `<span>` are significant.
-
-One common error is that the original text content and the rewritten text content do not match. You must identify the differences and correct the rewritten paragraph to have its text content to match the original text content.
-
-If you want to delete a paragraph, you should use the `delete_paragraph` tool instead of rewriting it with `<del>`.
-
-Pay attention to HTML entities. For many symbols, we have to use their HTML entities e.g. `&#x201F;`. Do not convert HTML entities to other forms e.g. `\uXXXX`.
-
-Try to preserve the styles of the paragraph and the spans involved.
-
-### Inserts a paragraph
-
-Tool: `insert_paragraph`
-Params: `newParagraph` (required) and `insertBeforeParagraphId`
-
-For inserting a paragraph, you will need to specify the following parameters:
-1. `newParagraph`: the new paragraph. It must contain exactly one `<p>` at the top level without the `id` attribute. If the paragraph starts with a bullet point, you must choose the appropriate bullet point ID and level for the element `<bullet>`. The content of `<bullet>` doesn't matter and will be automatically generated based on its `id` and `level` attribute.
-2. `insertBeforeParagraphId`: the insertion position before the existing paragraph ID. If it is set to an empty string, then the new paragraph will be inserted as the last paragraph.
-
-You must not add `<ins>` in a new paragraph. You must not set the id of the new paragraph.
-
-When inserting a paragraph, you must consider whether the new paragraph is a continuation of the previous paragraph. If the previous paragraph has `<bullet>` and the new paragraph is the continuation of the previous paragraph, you must consider using `<bullet>` with the same ID and level.
-
-You can only insert one paragraph at a time.
-
-Pay attention to HTML entities. For many symbols, we have to use their HTML entities e.g. `&#x201F;`. Do not convert HTML entities to other forms e.g. `\uXXXX`.
-
-Try to match the styles of the paragraph and the spans involved; we prefer them to match the styles of the nearby paragraphs. You must decide the appropriate styles of `<bullet>` by setting its `class` attribute if there is a bullet point.
-
-`insert_paragraph` returns the paragraph ID of the inserted paragraph that you can use in other operations like adding a comment.
-
-If you want to insert an empty paragraph, you must set the `newParagraph` parameter to `<p></p>`.
-
-### Deletes a paragraph
-
-Tool: `delete_paragraph`
-Params: `deletedParagraphId` (required)
-
-For deleting a paragraph, you will need to specify the following parameters:
-1. `deletedParagraphId`: the paragraph ID to be deleted
-
-### Create a bullet point level
-
-Tool: `create_bullet_point`
-Params: `bulletPointId` (required) and `numberFormat` (required)
-
-You can create a new bullet point level. 
-
-If you want to add one more level to the current bullet point, then you must provide the bullet point ID.
-
-If you want to add a new bullet point set with its first level, then you must set the bullet point ID to `null`.
-
-`numberFormat` is one of the following values: 'decimal', 'lowerLetter', 'upperLetter', 'lowerRoman', and 'upperRoman'
-
-The operation returns the bullet point ID and the level. Then, you can use those values to specify the bullet point in a paragraph with the `<bullet id="BULLET_POINT_ID" level="LEVEL">` element.
-
-### Gets a paragraph
-
-Tool: `get_paragraph`
-Params: `paragraphId` (required)
-
-Getting a paragraph by ID is useful when you want to add a comment over a paragraph that has already been rewritten.
-
-### Reads a PDF file
-
-Tool: `read_pdf`
-Params: `filePath` (required)
-
-The `read_pdf` endpoint will read the PDF in the plain text format.
-
-You must not write code to read PDF.
+Do not retry more than 3 times. If you cannot overcome the error, you must stop.
