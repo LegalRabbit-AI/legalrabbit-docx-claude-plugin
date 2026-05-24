@@ -22,6 +22,7 @@ The MCP tools mentioned here are from the legalrabbit-docx MCP. You must refer t
 - Reviews a docx file
 - Manipulates an existing docx file
 - Creates a new docx file
+- Inserts a new paragraph and handles its surrounding gaps
 - Handles an MCP tool error
 
 ## Understands the simplified markup language
@@ -61,7 +62,7 @@ The styles are represented by the `class` attribute. Here are the supported CSS 
 - `italic`: make the text italic.
 - `vertical-align-[<alignment>]`: align the text vertically. Can be baseline (default), superscript, and subscript.
 
-Sometimes a docx file might use an empty paragraph as a gap. When inserting a paragraph, you must pay attention to the padding top and bottom whether to insert an empty paragraph or use `pt-[<number>px]` and `pb-[<number>px>]`. As a general rule, you should follow what other paragraphs do.
+Sometimes a docx file might use one or more empty paragraph as a gap. When inserting a paragraph, you must pay attention to the padding top and bottom whether to insert one empty paragraphs or use `pt-[<number>px]` and `pb-[<number>px>]` or both. As a general rule, you should follow what the nearby paragraphs do.
 
 ## Understands comments
 
@@ -114,7 +115,17 @@ When creating the docx file, you are allowed to change the content of the docx f
 
 After finishing with your operations, you must use the `close_docx_file` tool to write the changes to disk and close the docx file.
 
-### Handles an MCP tool error
+## Inserts a new paragraph
+
+When inserting a new paragraph, you must determine the surrounding gaps of the new paragraph. 
+
+Sometimes `pt-[<number>px]` and/or `pb-[<number>px]` are used. Sometimes one or more empty whitespaces-only paragraphs are used. Sometimes it's both. 
+
+If you don't know how the gap is implemented, you can use the `get_paragraph` tool to get a specific paragraph and its gap; you will see how the gaps are implemented. 
+
+Then, you must ensure the gaps surrounded the inserted paragraph follow the pattern used in the doc. For example, if 2 empty paragraphs are used as a gap, then you must maintain the pattern.
+
+## Handles an MCP tool error
 
 You must understand the error message before retrying. 
 
