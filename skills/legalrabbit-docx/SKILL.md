@@ -97,7 +97,9 @@ Then, you can use the tools like `get_content` and `get_comments` to read the co
 
 When manipulating the docx file, you are forbidden to change the content of the docx file. You can only add comments/replies, resolve comments, delete comments/replies, redline, or perform other read-only operations. 
 
-Redlining means to add content using the `<ins>` tag or delete content using the `<del>` tag. `<ins>` and `del>` have the `author` attributes. You are only allowed to change `<ins> and `<del>` whose `author` is `LegalRabbit`.
+Redlining means to change the content by rewriting paragraphs and using the `<ins>` tag (insert content) or the `<del>` tag (delete content). `<ins>` and `<del>` have the `author` attributes. You are only allowed to change `<ins>` and `<del>` whose `author` is `LegalRabbit`.
+
+If you want to insert a new paragraph or delete a paragraph, you must use `insert_paragraph` or `delete_paragraph` respectively without using `<ins>` or `<del>`.
 
 If you accidentally perform a direct content change, the legalrabbit-docx MCP will raise an appropriate exception.
 
@@ -115,7 +117,7 @@ When creating the docx file, you are allowed to change the content of the docx f
 
 After finishing with your operations, you must use the `close_docx_file` tool to write the changes to disk and close the docx file.
 
-## Inserts a new paragraph
+## Inserts a new paragraph and handles its surrounding gaps
 
 When inserting a new paragraph, you must determine the surrounding gaps of the new paragraph. 
 
