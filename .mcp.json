@@ -2,8 +2,8 @@
   "mcpServers": {
     "legalrabbit-docx": {
       "type": "stdio",
-      "command": "${CLAUDE_PLUGIN_ROOT}/bin/downloader.sh",
-      "args": []
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/bin/index.js"]
     }
   }
 }

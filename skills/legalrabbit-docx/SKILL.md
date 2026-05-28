@@ -130,7 +130,7 @@ Sometimes `pt-[<number>px]` and/or `pb-[<number>px]` are used. Sometimes one or 
 
 If you don't know how the gap is implemented, you can use the `get_paragraph` tool to get a previous or next paragraph and their gaps; you will see how the gaps are implemented. 
 
-Then, you must ensure the gaps surrounded the inserted paragraph follow the pattern used in the doc. For example, if 2 empty `<gap />`s with certain styles (which is in the `class` attribute) are used as a gap between 2 paragraphs, then you must maintain the pattern. When using the `insert_paragraph` tool, you can add `<gap />`s before, after, and/or between paragraphs.
+Then, you must ensure the gaps surrounded the inserted paragraph follow the pattern used in the doc. For example, if 2 empty `<gap />`s with certain styles (which is in the `class` attribute) are used as a gap between 2 paragraphs, then you must maintain the pattern.
 
 ## Handles an MCP tool error
 
