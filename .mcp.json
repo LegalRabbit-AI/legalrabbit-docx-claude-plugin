@@ -1,8 +1,13 @@
 {
   "mcpServers": {
-    "legalrabbit-docx": {
+    "legalrabbit-docx-mac": {
       "type": "stdio",
       "command": "${CLAUDE_PLUGIN_ROOT}/bin/downloader.sh",
+      "args": []
+    },
+    "legalrabbit-docx-win": {
+      "type": "stdio",
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/downloader.bat",
       "args": []
     }
   }

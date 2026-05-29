@@ -16,6 +16,7 @@ The MCP tools mentioned here are from the legalrabbit-docx MCP. You must refer t
 
 ## Contents
 
+- Chooses which MCP to use: legalrabbit-docx-nix or legalrabbit-docx-win
 - Understands the simplified markup language
 - Understands comments
 - Reads docx content in the read-only mode
@@ -24,6 +25,14 @@ The MCP tools mentioned here are from the legalrabbit-docx MCP. You must refer t
 - Creates a new docx file
 - Inserts a new paragraph and handles its surrounding gaps
 - Handles an MCP tool error
+
+## Chooses which MCP to use: legalrabbit-docx-mac or legalrabbit-docx-win
+
+The legalrabbit-docx-mac MCP is for MacOS and Linux.
+
+The legalrabbit-docx-win MCP is for Windows.
+
+If you don't know which OS you are running on, you can try invoking the `i_have_loaded_the_legalrabbit_docx_skill` tool on both MCPs.
 
 ## Understands the simplified markup language
 
