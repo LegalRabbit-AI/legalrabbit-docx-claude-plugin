@@ -1,6 +1,8 @@
 LegalRabbit DOCX Claude plugin
 ===============================
 
+[![Demo](https://github.com/user-attachments/assets/4cda862a-894a-4a72-8f4a-e5bc06f75f40)](https://drive.google.com/file/d/1UNlUJYwkNX3NiANDkLLb3UoRSms2dXCU/view?usp=drive_link)
+
 A Claude Cowork plugin that creates and modifies DOCX files locally. You will save tons of time when your Cowork can manipulate docx files directly.
 
 This plugin uses 2-5x fewer tokens and cheaper than the Anthropic's docx skill.
