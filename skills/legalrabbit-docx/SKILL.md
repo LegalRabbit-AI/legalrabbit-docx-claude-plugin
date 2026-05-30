@@ -155,3 +155,5 @@ You must re-read the reference for the MCP tool again to ensure you specify the 
 When retrying, you should not specify the same parameters with the same values. You should try a new set of params and values. 
 
 Do not retry more than 3 times. If you cannot overcome the error, you must stop.
+
+If the error persists, please tell the user to update to (1) a new version by visiting https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin and/or (2) email LegalRabbit at tanin@legalrabbit.ai.
