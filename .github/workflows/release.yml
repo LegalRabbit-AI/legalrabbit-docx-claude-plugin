@@ -1,13 +1,10 @@
 name: release
 
 on:
-  push:
-    tags:
-      - '*'
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Optional tag. Default to the tag of the selected branch.'
+        description: 'Optional tag. Default to the selected branch.'
         required: false
         type: string
 
@@ -30,16 +27,18 @@ jobs:
           token: ${{ secrets.MCPB_PRIVATE_REPO_PAT }}
           path: legalrabbit-mcpb
       - name: Build the MCP executables
-        run: bun run bun-test && bun run build-mac && bun run build-win
+        run: cd legalrabbit-mcpb && bun install && bun run bun-test && bun run build-mac && bun run build-win
       - name: Create a release
         uses: softprops/action-gh-release@v2
         with:
           prerelease: true
+          draft: true
           files: |
             legalrabbit-docx.zip
             legalrabbit-mcpb/dist/mac/legalrabbit-docx-mcp
             legalrabbit-mcpb/dist/win/legalrabbit-docx-mcp.exe
           overwrite_files: true
+          target_commitish: ${{ github.sha }}
           fail_on_unmatched_files: true
           generate_release_notes: false
           append_body: false

@@ -2,12 +2,12 @@
   "mcpServers": {
     "legalrabbit-docx-enterprise": {
       "type": "stdio",
-      "command": "${CLAUDE_PLUGIN_ROOT}/bin/downloader.sh",
+      "command": "${CLAUDE_PLUGIN_ROOT}/scripts/downloader.sh",
       "args": []
     },
     "legalrabbit-docx-voyager": {
       "type": "stdio",
-      "command": "${CLAUDE_PLUGIN_ROOT}/bin/downloader.bat",
+      "command": "${CLAUDE_PLUGIN_ROOT}/scripts/downloader.bat",
       "args": []
     }
   }
