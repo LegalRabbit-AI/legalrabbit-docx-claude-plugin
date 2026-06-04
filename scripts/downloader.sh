@@ -5,9 +5,9 @@ INTERNAL_VERSION="0.5.0-dev"
 
 PLUGIN_DIR="$(realpath "${SCRIPT_DIR}/..")"
 
-ZIP_FILEPATH="${PLUGIN_DIR}/legalrabbit-docx.zip"
+ZIP_FILEPATH="${PLUGIN_DIR}/legalrabbit-docx.manifest"
 
-DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${INTERNAL_VERSION}/legalrabbit-docx.zip"
+DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${INTERNAL_VERSION}/legalrabbit-docx.manifest"
 if ! curl -R -s -L -z "${ZIP_FILEPATH}" -o "${ZIP_FILEPATH}" "${DOWNLOAD_URL}"; then
     rm -f "${ZIP_FILEPATH}"
     echo "Error: Failed to download the LegalRabbit executable from ${DOWNLOAD_URL}" >&2

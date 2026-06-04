@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - name: Build a zip file
-        run: zip -r legalrabbit-docx.zip ./agents ./skills
+        run: zip -r legalrabbit-docx.manifest ./agents ./skills
       - name: Build the MCP executables
         uses: actions/checkout@v4
         with:
@@ -34,7 +34,7 @@ jobs:
           prerelease: true
           draft: true
           files: |
-            legalrabbit-docx.zip
+            legalrabbit-docx.manifest
             legalrabbit-mcpb/dist/mac/legalrabbit-docx-mcp
             legalrabbit-mcpb/dist/win/legalrabbit-docx-mcp.exe
           overwrite_files: true

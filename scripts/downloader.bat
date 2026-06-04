@@ -1,8 +1,50 @@
 @echo off
 setlocal enabledelayedexpansion
 
+set "INTERNAL_VERSION=0.5.0-dev"
+
+set "PLUGIN_DIR=%~dp0.."
+
+set "ZIP_FILE_PATH=%PLUGIN_DIR%\legalrabbit-docx.manifest"
+
+curl -R -L -s -z "%ZIP_FILE_PATH%" -o "%ZIP_FILE_PATH%" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%INTERNAL_VERSION%/legalrabbit-docx.manifest"
+
+if %ERRORLEVEL% EQU 0 (
+    echo Downloaded %ZIP_FILE_PATH% successful! 1>&2
+) else (
+    if exist "%ZIP_FILE_PATH%" del /q "%ZIP_FILE_PATH%" 2>nul
+    echo Downloading %ZIP_FILE_PATH% failed with error code: %ERRORLEVEL% 1>&2
+    exit /b 1
+)
+
+if exist "%PLUGIN_DIR%\agents" (
+    rmdir /s /q "%PLUGIN_DIR%\agents"
+)
+
+if exist "%PLUGIN_DIR%\skills" (
+    rmdir /s /q "%PLUGIN_DIR%\skills"
+)
+
+tar -xf "%ZIP_FILE_PATH%" -C "%PLUGIN_DIR%"
+
+if not exist "%PLUGIN_DIR%\bin" (
+    mkdir "%PLUGIN_DIR%\bin"
+)
+
+set "MCP_EXECUTABLE_PATH=%PLUGIN_DIR%\bin\legalrabbit-docx-mcp.exe"
+
+curl -R -L -s -z "%MCP_EXECUTABLE_PATH%" -o "%MCP_EXECUTABLE_PATH%" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%INTERNAL_VERSION%/legalrabbit-docx-mcp.exe"
+
+if %ERRORLEVEL% EQU 0 (
+    echo Downloaded %MCP_EXECUTABLE_PATH% successful! 1>&2
+) else (
+    del /q "%MCP_EXECUTABLE_PATH%" 2>nul
+    echo Downloading %MCP_EXECUTABLE_PATH% failed with error code: %ERRORLEVEL% 1>&2
+    exit /b 1
+)
+
 :: Define the JSON file name
-set "JSON_FILE=%~dp0\..\.claude-plugin\plugin.json"
+set "JSON_FILE=%PLUGIN_DIR%\.claude-plugin\plugin.json"
 
 :: Check if the file exists
 if not exist "%JSON_FILE%" (
@@ -14,7 +56,7 @@ if not exist "%JSON_FILE%" (
 for /f "tokens=1,2 delims=:" %%a in ('findstr /i "\"version\"" "%JSON_FILE%"') do (
     :: %%b contains the value (e.g., "0.2.0",)
     set "VERSION=%%b"
-    
+
     :: Strip spaces, quotes, and commas
     set "VERSION=!VERSION: =!"
     set "VERSION=!VERSION:"=!"
@@ -23,16 +65,6 @@ for /f "tokens=1,2 delims=:" %%a in ('findstr /i "\"version\"" "%JSON_FILE%"') d
 
 echo The version is: %VERSION% 1>&2
 
-curl -R -L -s -z "%~dp0\legalrabbit-docx-mcp.exe" -o "%~dp0\legalrabbit-docx-mcp.exe.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%VERSION%/legalrabbit-docx-mcp.exe"
-
-if %ERRORLEVEL% EQU 0 (
-    if exist "%~dp0\legalrabbit-docx-mcp.exe.tmp" move /Y "%~dp0\legalrabbit-docx-mcp.exe.tmp" "%~dp0\legalrabbit-docx-mcp.exe" >nul
-    echo Download successful! 1>&2
-) else (
-    echo Download failed with error code: %ERRORLEVEL% 1>&2
-    exit /b 1
-)
-
 set "APP_VERSION=%VERSION%"
 
-%~dp0\legalrabbit-docx-mcp.exe
+%PLUGIN_DIR%\bin\legalrabbit-docx-mcp.exe
