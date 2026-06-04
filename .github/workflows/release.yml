@@ -1,13 +1,10 @@
 name: release
 
 on:
-  push:
-    tags:
-      - '*'
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Optional tag. Default to the tag of the selected branch.'
+        description: 'Optional tag. Default to the selected branch.'
         required: false
         type: string
 
@@ -21,8 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - name: Build a zip file
-        run: zip -r legalrabbit-docx.zip ./agents ./skills
       - name: Build the MCP executables
         uses: actions/checkout@v4
         with:
@@ -30,16 +25,27 @@ jobs:
           token: ${{ secrets.MCPB_PRIVATE_REPO_PAT }}
           path: legalrabbit-mcpb
       - name: Build the MCP executables
-        run: bun run bun-test && bun run build-mac && bun run build-win
+        run: cd legalrabbit-mcpb && bun install && bun run bun-test && bun run build-mac && bun run build-win
+      - name: Set the signature
+        run: |
+          MCPB_SHA=$(cd legalrabbit-mcpb && git rev-parse HEAD)
+          sed -i "s/\[SIGNATURE\]/${MCPB_SHA}/g" ./agents/legalrabbit-docx-subagent.md
+      - name: Build the agent and skills zip file
+        run: zip -r legalrabbit-docx.manifest ./agents ./skills
+      - name: Build the Claude plugin zip file
+        run: zip -r legalrabbit-docx-claude-plugin.zip ./.claude-plugin ./agents ./skills ./scripts .mcp.json
       - name: Create a release
         uses: softprops/action-gh-release@v2
         with:
           prerelease: true
+          draft: true
           files: |
-            legalrabbit-docx.zip
+            legalrabbit-docx-claude-plugin.zip
+            legalrabbit-docx.manifest
             legalrabbit-mcpb/dist/mac/legalrabbit-docx-mcp
             legalrabbit-mcpb/dist/win/legalrabbit-docx-mcp.exe
           overwrite_files: true
+          target_commitish: ${{ github.sha }}
           fail_on_unmatched_files: true
           generate_release_notes: false
           append_body: false

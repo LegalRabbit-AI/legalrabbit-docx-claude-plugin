@@ -2,3 +2,4 @@
 /bin/legalrabbit-docx-mcp*
 .idea
 *.zip
+*.manifest
