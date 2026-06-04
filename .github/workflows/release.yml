@@ -18,8 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - name: Build a zip file
-        run: zip -r legalrabbit-docx.manifest ./agents ./skills
       - name: Build the MCP executables
         uses: actions/checkout@v4
         with:
@@ -28,6 +26,12 @@ jobs:
           path: legalrabbit-mcpb
       - name: Build the MCP executables
         run: cd legalrabbit-mcpb && bun install && bun run bun-test && bun run build-mac && bun run build-win
+      - name: Set the signature
+        run: |
+          MCPB_SHA=$(cd legalrabbit-mcpb && git rev-parse HEAD)
+          sed -i "s/\[SIGNATURE\]/${MCPB_SHA}/g" ./agents/legalrabbit-docx-subagent.md
+      - name: Build a zip file
+        run: zip -r legalrabbit-docx.manifest ./agents ./skills
       - name: Create a release
         uses: softprops/action-gh-release@v2
         with:
