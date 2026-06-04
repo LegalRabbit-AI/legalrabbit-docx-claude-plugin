@@ -1,7 +1,8 @@
 #!/bin/bash
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-INTERNAL_VERSION="0.5.0-dev"
+INTERNAL_VERSION="1.0.0"
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PLUGIN_DIR="$(realpath "${SCRIPT_DIR}/..")"
 MCP_EXECUTABLE_FILEPATH="${PLUGIN_DIR}/bin/legalrabbit-docx-mcp"
 

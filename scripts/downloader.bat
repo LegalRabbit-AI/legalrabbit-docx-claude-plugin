@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "INTERNAL_VERSION=0.5.0-dev"
+set "INTERNAL_VERSION=1.0.0"
 
 set "PLUGIN_DIR=%~dp0.."
 
