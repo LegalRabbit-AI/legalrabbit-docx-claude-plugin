@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 
 set "INTERNAL_VERSION=1.0.0"
 
-set "PLUGIN_DIR=%~dp0.."
+for /f "delims=" %%I in ("%~dp0..") do set "PLUGIN_DIR=%%~fI"
 
 set "ZIP_FILE_PATH=%PLUGIN_DIR%\legalrabbit-docx.manifest"
 
@@ -18,8 +18,12 @@ if exist "%ZIP_FILE_PATH%" (
 curl -R -L -s -f -z "%ZIP_FILE_PATH%" -o "%ZIP_FILE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%INTERNAL_VERSION%/legalrabbit-docx.manifest"
 
 if %ERRORLEVEL% EQU 0 (
-    move /y "%ZIP_FILE_PATH%.tmp" "%ZIP_FILE_PATH%" >nul
-    echo Downloaded %ZIP_FILE_PATH% successful! 1>&2
+    if exist "%ZIP_FILE_PATH%.tmp" (
+        move /y "%ZIP_FILE_PATH%.tmp" "%ZIP_FILE_PATH%" >nul
+        echo Downloaded %ZIP_FILE_PATH% successfully! 1>&2
+    ) else (
+        echo The current legalrabbit-docx.manifest is up-to-date. 1>&2
+    )
 ) else (
     if not exist "%ZIP_FILE_PATH%" (
         echo Downloading %ZIP_FILE_PATH% failed with error code: %ERRORLEVEL% 1>&2
@@ -54,8 +58,12 @@ if exist "%MCP_EXECUTABLE_PATH%" (
 curl -R -L -s -f -z "%MCP_EXECUTABLE_PATH%" -o "%MCP_EXECUTABLE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%INTERNAL_VERSION%/legalrabbit-docx-mcp.exe"
 
 if %ERRORLEVEL% EQU 0 (
-    move /y "%MCP_EXECUTABLE_PATH%.tmp" "%MCP_EXECUTABLE_PATH%" >nul
-    echo Downloaded %MCP_EXECUTABLE_PATH% successful! 1>&2
+    if exist "%MCP_EXECUTABLE_PATH%.tmp" (
+        move /y "%MCP_EXECUTABLE_PATH%.tmp" "%MCP_EXECUTABLE_PATH%" >nul
+        echo Downloaded %MCP_EXECUTABLE_PATH% successful! 1>&2
+    ) else (
+        echo The current legalrabbit-docx-mcp.exe is up-to-date. 1>&2
+    )
 ) else (
     if not exist "%MCP_EXECUTABLE_PATH%" (
         echo Downloading %MCP_EXECUTABLE_PATH% failed with error code: %ERRORLEVEL% 1>&2
@@ -87,4 +95,4 @@ echo The version is: %VERSION% 1>&2
 
 set "APP_VERSION=%VERSION%"
 
-%PLUGIN_DIR%\bin\legalrabbit-docx-mcp.exe
+"%PLUGIN_DIR%\bin\legalrabbit-docx-mcp.exe"
