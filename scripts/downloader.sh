@@ -20,7 +20,11 @@ if [ "${LEGALRABBIT_DOCX_TEST_MODE}" != "true" ]; then
         exit 1
       fi
   else
-      mv -f "${ZIP_FILEPATH}.tmp" "${ZIP_FILEPATH}"
+      if [ -f "${ZIP_FILEPATH}.tmp" ]; then
+        mv -f "${ZIP_FILEPATH}.tmp" "${ZIP_FILEPATH}"
+      else
+        echo "The current legalrabbit-docx.manifest is up-to-date" >&2
+      fi
   fi
 
   rm -rf "${PLUGIN_DIR}/agents"
@@ -40,9 +44,12 @@ if [ "${LEGALRABBIT_DOCX_TEST_MODE}" != "true" ]; then
         exit 1
       fi
   else
-      mv -f "${MCP_EXECUTABLE_FILEPATH}.tmp" "${MCP_EXECUTABLE_FILEPATH}"
+      if [ -f "${MCP_EXECUTABLE_FILEPATH}.tmp" ]; then
+        mv -f "${MCP_EXECUTABLE_FILEPATH}.tmp" "${MCP_EXECUTABLE_FILEPATH}"
+      else
+        echo "The current legalrabbit-docx-mcp is up-to-date" >&2
+      fi
   fi
-
 
   chmod +x "${MCP_EXECUTABLE_FILEPATH}"
 fi
