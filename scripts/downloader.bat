@@ -20,7 +20,7 @@ curl -R -L -s -f -z "%ZIP_FILE_PATH%" -o "%ZIP_FILE_PATH%.tmp" "https://github.c
 if %ERRORLEVEL% EQU 0 (
     if exist "%ZIP_FILE_PATH%.tmp" (
         move /y "%ZIP_FILE_PATH%.tmp" "%ZIP_FILE_PATH%" >nul
-        echo Downloaded %ZIP_FILE_PATH% successfully! 1>&2
+        echo Downloaded %ZIP_FILE_PATH% successfully. 1>&2
     ) else (
         echo The current legalrabbit-docx.manifest is up-to-date. 1>&2
     )
@@ -60,7 +60,7 @@ curl -R -L -s -f -z "%MCP_EXECUTABLE_PATH%" -o "%MCP_EXECUTABLE_PATH%.tmp" "http
 if %ERRORLEVEL% EQU 0 (
     if exist "%MCP_EXECUTABLE_PATH%.tmp" (
         move /y "%MCP_EXECUTABLE_PATH%.tmp" "%MCP_EXECUTABLE_PATH%" >nul
-        echo Downloaded %MCP_EXECUTABLE_PATH% successful! 1>&2
+        echo Downloaded %MCP_EXECUTABLE_PATH% successfully. 1>&2
     ) else (
         echo The current legalrabbit-docx-mcp.exe is up-to-date. 1>&2
     )
