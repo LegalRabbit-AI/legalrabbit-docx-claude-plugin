@@ -1,9 +1,31 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "INTERNAL_VERSION=1.0.0"
-
 for /f "delims=" %%I in ("%~dp0..") do set "PLUGIN_DIR=%%~fI"
+
+:: Define the JSON file name
+set "JSON_FILE=%PLUGIN_DIR%\.claude-plugin\plugin.json"
+
+:: Check if the file exists
+if not exist "%JSON_FILE%" (
+    echo Error: %JSON_FILE% not found.
+    exit /b 1
+)
+
+:: Loop through the file to find the version line
+for /f "tokens=1,2 delims=:" %%a in ('findstr /i "\"version\"" "%JSON_FILE%"') do (
+    :: %%b contains the value (e.g., "0.2.0",)
+    set "VERSION=%%b"
+
+    :: Strip spaces, quotes, and commas
+    set "VERSION=!VERSION: =!"
+    set "VERSION=!VERSION:"=!"
+    set "VERSION=!VERSION:,=!"
+)
+
+echo The version is: %VERSION% 1>&2
+
+set "APP_VERSION=%VERSION%"
 
 set "ZIP_FILE_PATH=%PLUGIN_DIR%\legalrabbit-docx.manifest"
 
@@ -15,7 +37,7 @@ if exist "%ZIP_FILE_PATH%" (
     )
 )
 
-curl -R -L -s -f -z "%ZIP_FILE_PATH%" -o "%ZIP_FILE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%INTERNAL_VERSION%/legalrabbit-docx.manifest"
+curl -R -L -s -f -z "%ZIP_FILE_PATH%" -o "%ZIP_FILE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%APP_VERSION%/legalrabbit-docx.manifest"
 
 if %ERRORLEVEL% EQU 0 (
     if exist "%ZIP_FILE_PATH%.tmp" (
@@ -55,7 +77,7 @@ if exist "%MCP_EXECUTABLE_PATH%" (
     )
 )
 
-curl -R -L -s -f -z "%MCP_EXECUTABLE_PATH%" -o "%MCP_EXECUTABLE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%INTERNAL_VERSION%/legalrabbit-docx-mcp.exe"
+curl -R -L -s -f -z "%MCP_EXECUTABLE_PATH%" -o "%MCP_EXECUTABLE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%APP_VERSION%/legalrabbit-docx-mcp.exe"
 
 if %ERRORLEVEL% EQU 0 (
     if exist "%MCP_EXECUTABLE_PATH%.tmp" (
@@ -71,28 +93,5 @@ if %ERRORLEVEL% EQU 0 (
     )
 )
 
-:: Define the JSON file name
-set "JSON_FILE=%PLUGIN_DIR%\.claude-plugin\plugin.json"
-
-:: Check if the file exists
-if not exist "%JSON_FILE%" (
-    echo Error: %JSON_FILE% not found.
-    exit /b 1
-)
-
-:: Loop through the file to find the version line
-for /f "tokens=1,2 delims=:" %%a in ('findstr /i "\"version\"" "%JSON_FILE%"') do (
-    :: %%b contains the value (e.g., "0.2.0",)
-    set "VERSION=%%b"
-
-    :: Strip spaces, quotes, and commas
-    set "VERSION=!VERSION: =!"
-    set "VERSION=!VERSION:"=!"
-    set "VERSION=!VERSION:,=!"
-)
-
-echo The version is: %VERSION% 1>&2
-
-set "APP_VERSION=%VERSION%"
 
 "%PLUGIN_DIR%\bin\legalrabbit-docx-mcp.exe"

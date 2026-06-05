@@ -1,9 +1,12 @@
 #!/bin/bash
 
-INTERNAL_VERSION="1.0.0"
-
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PLUGIN_DIR="$(realpath "${SCRIPT_DIR}/..")"
+
+# Read version from plugin.json
+VERSION=$(grep -o '"version"[[:space:]]*:[[:space:]]*"[^"]*"' "${PLUGIN_DIR}/.claude-plugin/plugin.json" | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+export APP_VERSION="${VERSION}"
+
 MCP_EXECUTABLE_FILEPATH="${PLUGIN_DIR}/bin/legalrabbit-docx-mcp"
 
 if [ "${LEGALRABBIT_DOCX_TEST_MODE}" != "true" ]; then
@@ -13,7 +16,7 @@ if [ "${LEGALRABBIT_DOCX_TEST_MODE}" != "true" ]; then
       rm -f "${ZIP_FILEPATH}"
   fi
 
-  DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${INTERNAL_VERSION}/legalrabbit-docx.manifest"
+  DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx.manifest"
   if ! curl -R -s -L -f -z "${ZIP_FILEPATH}" -o "${ZIP_FILEPATH}.tmp" "${DOWNLOAD_URL}"; then
       if [ ! -f "${ZIP_FILEPATH}" ]; then
         echo "Error: Failed to download the LegalRabbit executable from ${DOWNLOAD_URL}" >&2
@@ -37,7 +40,7 @@ if [ "${LEGALRABBIT_DOCX_TEST_MODE}" != "true" ]; then
       rm -f "${MCP_EXECUTABLE_FILEPATH}"
   fi
 
-  DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${INTERNAL_VERSION}/legalrabbit-docx-mcp"
+  DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx-mcp"
   if ! curl -R -s -L -f -z "${MCP_EXECUTABLE_FILEPATH}" -o "${MCP_EXECUTABLE_FILEPATH}.tmp" "${DOWNLOAD_URL}"; then
       if [ ! -f "${MCP_EXECUTABLE_FILEPATH}" ]; then
         echo "Error: Failed to download the LegalRabbit executable from ${DOWNLOAD_URL}" >&2
@@ -53,9 +56,5 @@ if [ "${LEGALRABBIT_DOCX_TEST_MODE}" != "true" ]; then
 
   chmod +x "${MCP_EXECUTABLE_FILEPATH}"
 fi
-
-# Read version from plugin.json
-VERSION=$(grep -o '"version"[[:space:]]*:[[:space:]]*"[^"]*"' "${PLUGIN_DIR}/.claude-plugin/plugin.json" | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
-export APP_VERSION="${VERSION}"
 
 exec "${MCP_EXECUTABLE_FILEPATH}" <&0
