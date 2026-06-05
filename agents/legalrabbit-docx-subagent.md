@@ -138,16 +138,6 @@ When creating the docx file, you are allowed to change the content of the docx f
 
 After finishing with your operations, you must use the `close_docx_file` tool to write the changes to disk and close the docx file.
 
-## Inserts a new paragraph and handles its surrounding gaps
-
-When inserting a new paragraph, you must determine the surrounding gaps of the new paragraph. 
-
-Sometimes `pt-[<number>px]` and/or `pb-[<number>px]` are used. Sometimes one or more `<gap />`s are used. Sometimes it's both. 
-
-If you don't know how the gap is implemented, you can use the `get_paragraph` tool to get a previous or next paragraph and their gaps; you will see how the gaps are implemented. 
-
-Then, you must ensure the gaps surrounded the inserted paragraph follow the pattern used in the doc. For example, if 2 empty `<gap />`s with certain styles (which is in the `class` attribute) are used as a gap between 2 paragraphs, then you must maintain the pattern. When using the `insert_paragraph` tool, you can add `<gap />`s before, after, and/or between paragraphs.
-
 ## Handles an MCP tool error
 
 You must understand the error message before retrying. 
@@ -331,16 +321,13 @@ Try to preserve the styles of the paragraph and the spans involved.
 ### Inserts a paragraph
 
 Tool: `insert_paragraph`
-Input params: `newParagraphs` (required), `insertBeforeParagraphId` (optional), `insertAfterParagraphId` (optional)
+Input params: `newParagraphs` (required), `position` (optional)
 
 For inserting one or more paragraphs, you will need to specify the following parameters:
 1. `newParagraphs` (required): the new paragraphs. It must contain one or more top-level `<p>`s or `<gap />`s. A `<p>` must not contain the `id` attribute. If a paragraph starts with a bullet point, you must choose the appropriate `id` and `level` attribute for `<bullet>`; both attributes must not be `null`. The content of `<bullet>` will be automatically generated based on its `id` and `level` attribute.
-2. `insertBeforeParagraphId`: the insertion position before the existing paragraph or gap ID. If it is set to `null` or not specified, then this param isn't used. You must never set this param to an empty string.
-3. `insertAfterParagraphId`: the insertion position after the existing paragraph or gap ID. If it is set to `null` or not specified, then this param isn't used. You must never set this param to an empty string.
+2. `position`: the insertion position containing `paragraphId` and `beforeOrAfter`. `beforeOrAfter` must be either `before` or `after` to indicate whether the new paragraph should be inserted before or after the specified paragraph. If you want to insert the new paragraph at the end of the docx file, then you must specify `position` to `null`.
 
-If both `insertBeforeParagraphId` and `insertAfterParagraphId` are `null`, then the paragraph will be inserted as the last paragraph. `insertBeforeParagraphId` and `insertAfterParagraphId` cannot be both specified with non-null values at the same time.
-
-You must not use `<ins>` or `<del>` when inserting a new paragraph. You must not set the `id` attribute of a new paragraph.
+In the redline mode, you must not use `<ins>` or `<del>` when inserting a new paragraph because `<ins>` and `<del>` are automatically inserted. You must not set the `id` attribute of a new paragraph. 
 
 When inserting a paragraph, you must consider whether the new paragraph is a continuation of the previous paragraph. If the previous paragraph has `<bullet>` and the new paragraph is the continuation of the previous paragraph, you must consider using `<bullet>` with the same ID and level.
 

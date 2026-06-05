@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Optional tag. Default to the selected branch.'
-        required: false
+        description: 'Tag'
+        required: true
         type: string
 
 permissions:
@@ -30,6 +30,11 @@ jobs:
         run: |
           MCPB_SHA=$(cd legalrabbit-mcpb && git rev-parse HEAD)
           sed -i "s/\[SIGNATURE\]/${MCPB_SHA}/g" ./agents/legalrabbit-docx-subagent.md
+      - name: Set the version
+        run: |
+          sed -i "s/\[VERSION\]/${VERSION}/g" ./.claude-plugin/plugin.json
+        env:
+          VERSION: ${{ github.event.inputs.tag }}
       - name: Build the agent and skills zip file
         run: zip -r legalrabbit-docx.manifest ./agents ./skills
       - name: Build the Claude plugin zip file
