@@ -38,7 +38,7 @@ How to install
 3. Open your Cowork and go to `Customize`
 4. Click on the `+` on the right side of `Personal Plugins`.
 5. Choose `+ Create Plugin >` and `Upload Plugin`
-6. Upload the downloaded `Source code (zip)` and click `Upload`
+6. Upload the downloaded `legalrabbit-docx-claude-plugin.zip` and click `Upload`
 7. There will be a warning about our local MCP server named `docx`. Please click `Continue`.
 
 Now you can test it using the example prompt above.
@@ -56,8 +56,6 @@ Release a new version
 ----------------------
 
 1. Go to [the release Github Actions workflow](https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/actions/workflows/release.yml).
-2. Click `Run workflow` and fills in an appropriate tag e.g. `0.7.0`, `0.7.0-rc1`, `0.7.0-dev`
+2. Click `Run workflow` and fills in an appropriate tag e.g. `1.0.0`, `1.0.0-dev`
 3. Wait for the workflow to complete.
-4. A new release will be created as a pre-release draft.
-5. Go to the [releases page](https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases) and edit the new release accordingly.
-6. Publish the release.
+4. Go to the [releases page](https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases) and edit the new release accordingly.
