@@ -8,6 +8,6 @@ You must use the legalrabbit-docx-subagent subagent (located at: `../../agents/l
 
 The legalrabbit-docx-subagent subagent is NOT responsible for reviewing and understanding the content.
 
-If you need the content of the docx file, you should ask the legalrabbit-docx-subagent subagent to fetch the plain-text content for you. 
+If you need the content of the docx file, you should ask the legalrabbit-docx-subagent subagent to fetch the plain-text content for you.
 
 After you review the plain-text content and want to edit, redline, and/or comment, you should ask the legalrabbit-docx-subagent subagent to perform those operations accordingly.
