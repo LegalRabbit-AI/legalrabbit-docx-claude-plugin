@@ -1,7 +1,9 @@
-A reliable and efficient DOCX MCP for Claude Cowork and Codex
+DOCX MCP for Claude Cowork and Codex
 ====================================================================
 
-legalrabbit-docx-mcp enables your Claude Cowork and Codex to read and manipulates DOCX files locally. Our MCP uses 2-5x fewer tokens than the Anthropic's docx skill.
+legalrabbit-docx-mcp enables your Claude Cowork and Codex to read and manipulate DOCX files locally. 
+
+Our MCP uses 2-5x fewer tokens than the Anthropic's docx skill and is more reliable.
 
 You can use our DOCX plugin together with [Claude for Legal](https://github.com/anthropics/claude-for-legal) to enable a more seamless experience of working with a docx file!
 
