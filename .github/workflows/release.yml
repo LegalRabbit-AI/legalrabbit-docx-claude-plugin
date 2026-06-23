@@ -28,7 +28,7 @@ jobs:
         run: cd legalrabbit-mcpb && bun install
       - name: Run the tests on the MCP repo
         if: ${{ !endsWith(github.event.inputs.tag, '-dev') }}
-        run: cd legalrabbit-mcpb && bun run bun-test
+        run: cd legalrabbit-mcpb && npm run test-all
       - name: Build the MCP executables
         run: cd legalrabbit-mcpb && npm run build
       - name: Build the agent and skills zip file
