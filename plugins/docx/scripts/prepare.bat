@@ -23,7 +23,7 @@ if exist "%MCP_EXECUTABLE_PATH%" (
     )
 )
 
-curl -R -L -s -f -z "%MCP_EXECUTABLE_PATH%" -o "%MCP_EXECUTABLE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%APP_VERSION%/legalrabbit-docx-mcp.exe"
+curl -R -L -s -f -z "%MCP_EXECUTABLE_PATH%" -o "%MCP_EXECUTABLE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp/releases/download/%APP_VERSION%/legalrabbit-docx-mcp.exe"
 
 if %ERRORLEVEL% EQU 0 (
     if exist "%MCP_EXECUTABLE_PATH%.tmp" (
@@ -49,7 +49,7 @@ if exist "%ZIP_FILE_PATH%" (
     )
 )
 
-curl -R -L -s -f -z "%ZIP_FILE_PATH%" -o "%ZIP_FILE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/%APP_VERSION%/legalrabbit-docx.manifest"
+curl -R -L -s -f -z "%ZIP_FILE_PATH%" -o "%ZIP_FILE_PATH%.tmp" "https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp/releases/download/%APP_VERSION%/legalrabbit-docx.manifest"
 
 if %ERRORLEVEL% EQU 0 (
     if exist "%ZIP_FILE_PATH%.tmp" (

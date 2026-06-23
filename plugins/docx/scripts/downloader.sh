@@ -19,7 +19,7 @@ MCP_EXECUTABLE_FILEPATH="${PLUGIN_DIR}/bin/legalrabbit-docx-mcp"
         rm -f "${MCP_EXECUTABLE_FILEPATH}"
     fi
 
-    DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx-mcp"
+    DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp/releases/download/${VERSION}/legalrabbit-docx-mcp"
     if ! curl -R -s -L -f -z "${MCP_EXECUTABLE_FILEPATH}" -o "${MCP_EXECUTABLE_FILEPATH}.tmp" "${DOWNLOAD_URL}"; then
         if [ ! -f "${MCP_EXECUTABLE_FILEPATH}" ]; then
           echo "Error: Failed to download the LegalRabbit executable from ${DOWNLOAD_URL}" >&2
@@ -41,7 +41,7 @@ MCP_EXECUTABLE_FILEPATH="${PLUGIN_DIR}/bin/legalrabbit-docx-mcp"
         rm -f "${ZIP_FILEPATH}"
     fi
 
-    DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases/download/${VERSION}/legalrabbit-docx.manifest"
+    DOWNLOAD_URL="https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp/releases/download/${VERSION}/legalrabbit-docx.manifest"
     if ! curl -R -s -L -f -z "${ZIP_FILEPATH}" -o "${ZIP_FILEPATH}.tmp" "${DOWNLOAD_URL}"; then
         if [ ! -f "${ZIP_FILEPATH}" ]; then
           echo "Error: Failed to download the LegalRabbit executable from ${DOWNLOAD_URL}" >&2
