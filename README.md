@@ -1,7 +1,7 @@
-DOCX Claude and Codex plugin
-===============================
+A reliable and efficient DOCX MCP for Claude Cowork and Codex
+====================================================================
 
-A Claude Cowork and Codex plugin that creates and modifies DOCX files locally. You will save tons of time when your Cowork can manipulate docx files directly. This plugin uses 2-5x fewer tokens than the Anthropic's docx skill.
+legalrabbit-docx-mcp enables your Claude Cowork and Codex to read and manipulates DOCX files locally. Our MCP uses 2-5x fewer tokens than the Anthropic's docx skill.
 
 You can use our DOCX plugin together with [Claude for Legal](https://github.com/anthropics/claude-for-legal) to enable a more seamless experience of working with a docx file!
 
@@ -35,28 +35,25 @@ How to install
 
 ![Claude Installation](https://raw.githubusercontent.com/LegalRabbit-AI/legalrabbit-media/main/claude.jpg) __For Claude Cowork:__
 
-1. Open your Cowork and go to `Customize`
-2. Click on the `+` on the right side of `Personal Plugins`.
-3. Choose `+ Create Plugin >` and `Add marketplace`
-4. Fill `URL` with `https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin and click `Sync`
-4. Select `Add from a repository`
-5. Click on the `+` on the right side of `Personal Plugins` and select `Browse plugins`
-6. Go to the `Personal` tab and click on the `legalrabbit-docx-claude-plugin` tab.
-7. Click on the `+` button of the plugin `Legalrabbit docx`
+1. Go to the latest release, 1.0.0, and download [legalrabbit-docx.mcpb](https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp/releases/download/1.0.0/legalrabbit-docx.mcpb).
+2. Switch to Claude and go to `Settings`
+3. Select the `Extensions` tab and click on `Advanced settings`
+4. Click `Install Extension` and select the downloaded `legalrabbit-docx.mcpb` file.
+5. Click `Install`
+6. Add `You must use the legalrabbit-docx-mcp tool for reading and manipulating docx files` to `CLAUDE.md`
 
 ![Claude Installation](https://raw.githubusercontent.com/LegalRabbit-AI/legalrabbit-media/main/openai.jpg) __For Codex:__
 
 1. Go to `Plugins` and click the `+ v` (the down arrow next to the plug button) on the top right corner
 2. Select `+ Add marketplace`
-3. Fill `Source` with `https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin` and click `Add marketplace`
+3. Fill `Source` with `https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp` and click `Add marketplace`
 4. On the Plugins page, click on the `legalrabbit-tools` marketplace.
 5. Click `Add plugin` on the Legalrabbit Docx plugin.
+6. Add `You must use the legalrabbit-docx skill for reading and manipulating docx files` to `AGENTS.md`
 
 🛠️ __Testing__
 
-Please first put `You must use the legalrabbit-docx skill for interacting with docx files` in `CLAUDE.md` or `AGENTS.md`.
-
-Then, you can try `Create a beautifully written short docx`
+You can try `Create a beautifully written short docx`
 
 
 Support
@@ -70,7 +67,7 @@ Learn more about us: [LegalRabbit](https://legalrabbit.ai/)
 Release a new version
 ----------------------
 
-1. Go to [the release Github Actions workflow](https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/actions/workflows/release.yml).
+1. Go to [the release Github Actions workflow](https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp/actions/workflows/release.yml).
 2. Click `Run workflow` and fills in an appropriate tag e.g. `1.0.0`, `1.0.0-dev`
 3. Wait for the workflow to complete.
-4. Go to the [releases page](https://github.com/LegalRabbit-AI/legalrabbit-docx-claude-plugin/releases) and edit the new release accordingly.
+4. Go to the [releases page](https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp/releases) and edit the new release accordingly.
