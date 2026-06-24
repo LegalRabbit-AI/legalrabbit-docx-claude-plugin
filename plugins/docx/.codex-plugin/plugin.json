@@ -3,6 +3,17 @@
   "description": "Drafts, edits, redlines, and comments on your local docx files. Completely local. Uses 2-5x fewer tokens than the Anthropic's docx skill.",
   "version": "1.0.0",
   "author": {
-    "name": "legalrabbit.ai"
+    "name": "legalrabbit.ai",
+    "email": "tanin@legalrabbit.ai"
+  },
+  "homepage": "https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp",
+  "repository": "https://github.com/LegalRabbit-AI/legalrabbit-docx-mcp",
+  "keywords": [
+    "docx",
+    "legal"
+  ],
+  "interface": {
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.png"
   }
 }
