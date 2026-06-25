@@ -3,10 +3,10 @@ DOCX MCP for Claude Cowork and Codex
 
 legalrabbit-docx-mcp enables your Claude Cowork and Codex to read and manipulate DOCX files locally. 
 
-Our MCP uses 2-5x fewer tokens than the Anthropic's docx skill, is faster, and is more reliable. There are 2 reasons why:
+Our MCP uses 2-5x fewer tokens than the Anthropic's docx skill, is faster, and is more reliable. There are 2 reasons:
 
-1. Our MCP supports a bidirectional transformation of HTML <-> DOCX. AI will write HTML. [AI is excellent and efficient at processing HTML](https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html).
-2. Our MCP supports "surgical editing". AI can specify which paragraph/table/row to edit without editing the entire doc.
+1. Our MCP supports a bidirectional transformation of HTML <-> DOCX. AI will write HTML, not DOCX. It is well known that [AI is excellent and efficient at processing HTML](https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html)!
+2. Our MCP supports "surgical editing". AI can specify which paragraph/table/row to edit without editing the entire doc. This saves a lot of tokens compared to the traditional docx skill that unzips a docx file and edits document.xml directly.
 
 You can use our DOCX plugin together with [Claude for Legal](https://github.com/anthropics/claude-for-legal) to enable a more seamless experience of working with a docx file!
 
